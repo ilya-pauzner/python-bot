@@ -23,10 +23,11 @@ def handle(file_id):
 @bot.message_handler(content_types = ["document"])
 def handle_job(message):
 	global jobs
+	jobs += 1
 	bot.send_message(message.chat.id, "job %d assigned" % (jobs))
 	handle(message.document.file_id)
 	bot.send_message(message.chat.id, "job %d done" % (jobs))
-	jobs += 1
+
 	
 @bot.message_handler(func=lambda m: True)
 def echo_all(message):
