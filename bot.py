@@ -2,8 +2,13 @@ import config
 import telebot
 import requests
 import os
+import logging
 
 bot = telebot.TeleBot(config.TOKEN)
+
+logger = telebot.logger
+telebot.logger.setLevel(logging.DEBUG)
+
 jobs = 0
 
 def handle(file_id):
@@ -13,14 +18,12 @@ def handle(file_id):
 	py_file = open(name, 'w')
 	py_file.write(file.text)
 	py_file.close()
-	print("%s" % (name))
 	os.system("python %s" % (name))
 
 @bot.message_handler(content_types = ["document"])
 def handle_job(message):
 	global jobs
-	bot.reply_to(message, "job %d assigned" % (jobs))
-	print(message)
+	bot.send_message(message.chat.id, "job %d assigned" % (jobs))
 	handle(message.document.file_id)
 	bot.send_message(message.chat.id, "job %d done" % (jobs))
 	jobs += 1
