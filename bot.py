@@ -4,10 +4,13 @@ import requests
 import os
 import logging
 
+# config is python file
+# now the only variable there is TOKEN, its value is Telegram Bot Token
+
 bot = telebot.TeleBot(config.TOKEN)
 
 logger = telebot.logger
-telebot.logger.setLevel(logging.DEBUG)
+telebot.logger.setLevel(logging.WARNING)
 
 jobs = 0
 
